@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acessibilidade Digital para Todos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Estilos Globais */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: #222;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #4CAF50;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .header-buttons {
+            margin-top: 10px;
+        }
+
+        .header-buttons button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .header-buttons button:hover {
+            background-color: #45a049;
+        }
+
+        /* Conteúdo Principal */
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tab {
+            display: none;
+        }
+
+        .tab.active {
+            display: block;
+        }
+
+        section {
+            margin-bottom: 30px;
+            background-color: #111;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        section p {
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        section ul {
+            margin-left: 20px;
+        }
+
+        section ul li {
+            margin-bottom: 10px;
+        }
+
+        section ol {
+            margin-left: 20px;
+        }
+
+        section ol li {
+            margin-bottom: 10px;
+        }
+
+        /* Imagens */
+        .section-image {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* Botão Doar Agora */
+        .donate-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+        }
+
+        .donate-button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .donate-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #222;
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        footer h3 {
+            margin-bottom: 10px;
+        }
+
+        /* Chatbot */
+        .chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background-color: #111;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot.open {
+            display: flex;
+            transform: translateY(0);
+        }
+
+        .chatbot header {
+            background-color: #222;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot header .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .chatbot .messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #111;
+            border-bottom: 1px solid #444;
+        }
+
+        .chatbot .messages .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .chatbot .messages .message.user {
+            background-color: #4CAF50;
+            color: white;
+            margin-left: auto;
+        }
+
+        .chatbot .messages .message.bot {
+            background-color: #222;
+            color: white;
+            margin-right: auto;
+        }
+
+        .chatbot input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #444;
+            outline: none;
+            font-size: 1rem;
+            background-color: #222;
+            color: white;
+        }
+
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+        }
+
+        .chatbot-toggle:hover {
+            background-color: #45a049;
+        }
+
+        /* Modal de Doação */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: #111;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #222;
+            color: white;
+        }
+
+        .modal-content button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .modal-content button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Acessibilidade Digital para Todos</h1>
+        <div class="header-buttons">
+            <button onclick="showTab('learn')">Quero Aprender</button>
+            <button onclick="showTab('help')">Quero Ajudar</button>
+            <button onclick="showAccountModal()">Criar Conta</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Aba: Quero Aprender -->
+        <div id="learn" class="tab active">
+            <section>
+                <h2>Como Usar a Internet?</h2>
+                <p>A internet é uma ferramenta poderosa que pode transformar vidas, oferecendo acesso a conhecimento, comunicação e oportunidades. Se você está começando, não se preocupe! Vamos te guiar de forma simples e prática.</p>
+                <img src="https://img.freepik.com/fotos-gratis/local-de-trabalho-com-dinheiro-e-notas-de-dolar-dos-eua-perto-do-laptop_158538-26284.jpg" alt="Ilustração sobre internet" class="section-image">
+                <ol>
+                    <li>
+                        <strong>Conecte-se à internet:</strong>
+                        <p>Para acessar a internet, você precisa de uma conexão. Aqui estão as principais formas de se conectar:</p>
+                        <ul>
+                            <li><strong>Wi-Fi:</strong> Em casa, cafés, bibliotecas ou outros locais públicos. Basta selecionar a rede Wi-Fi disponível e inserir a senha, se necessário.</li>
+                            <li><strong>Dados móveis:</strong> No celular, você pode usar o plano de dados da sua operadora. Verifique se o pacote de dados está ativo e habilitado nas configurações do seu aparelho.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Abra um navegador:</strong>
+                        <p>Um navegador é um programa que permite acessar sites. Aqui estão alguns navegadores populares:</p>
+                        <ul>
+                            <li><strong>Google Chrome:</strong> Disponível para computadores e celulares.</li>
+                            <li><strong>Mozilla Firefox:</strong> Conhecido por sua segurança e privacidade.</li>
+                            <li><strong>Microsoft Edge:</strong> Integrado ao Windows e com boa performance.</li>
+                            <li><strong>Safari:</strong> Usado em dispositivos da Apple, como iPhones e Macs.</li>
+                        </ul>
+                        <img src="https://s32907.pcdn.co/wp-content/uploads/2019/08/escritorio-do-google-frente.jpg" alt="Ilustração sobre navegadores" class="section-image">
+                    </li>
+                    <li>
+                        <strong>Digite um endereço:</strong>
+                        <p>Na barra maior do navegador, digite o site que você quer visitar. Por exemplo:</p>
+                        <ul>
+                            <li><strong>www.google.com</strong> para pesquisar informações.</li>
+                            <li><strong>www.youtube.com</strong> para assistir a vídeos.</li>
+                            <li><strong>www.facebook.com</strong> para acessar redes sociais.</li>
+                        </ul>
+                        <p>Se você não sabe o endereço exato, pode usar um site de busca, como o Google, para encontrar o que precisa.</p>
+                    </li>
+                    <li>
+                        <strong>Pesquise informações:</strong>
+                        <p>Use a barra de pesquisa do Google ou de outros sites para encontrar o que você precisa. Aqui estão algumas dicas:</p>
+                        <ul>
+                            <li>Digite palavras-chave relacionadas ao que você procura. Por exemplo: "receita de bolo de chocolate", "notícias sobre tecnologia", "como cuidar de plantas".</li>
+                            <li>Use aspas para pesquisar frases exatas. Exemplo: "como fazer um currículo".</li>
+                            <li>Adicione palavras como "tutorial" ou "passo a passo" para encontrar guias detalhados.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Navegue com segurança:</strong>
+                        <p>A internet é um lugar incrível, mas é importante tomar alguns cuidados para proteger sua privacidade e segurança:</p>
+                        <ul>
+                            <li><strong>Evite clicar em links suspeitos:</strong> Eles podem levar a sites maliciosos ou tentar roubar suas informações.</li>
+                            <li><strong>Use senhas fortes:</strong> Combine letras, números e símbolos para criar senhas seguras. Evite usar a mesma senha em vários sites.</li>
+                            <li><strong>Mantenha seus dispositivos atualizados:</strong> Atualizações de software corrigem falhas de segurança e melhoram a performance.</li>
+                            <li><strong>Cuidado com informações pessoais:</strong> Não compartilhe dados como CPF, endereço ou senhas em sites desconhecidos.</li>
+                        </ul>
+                        <img src="https://t2.tudocdn.net/363127?w=719&h=431" alt="Ilustração sobre segurança na internet" class="section-image">
+                    </li>
+                </ol>
+                <p>Com esses passos, você já pode começar a explorar a internet com mais confiança! Se tiver dúvidas, clique no botão do chatbot no canto inferior direito.</p>
+            </section>
+        </div>
+
+        <!-- Aba: Quero Ajudar -->
+        <div id="help" class="tab">
+            <section>
+                <h2>Nosso Projeto de Acessibilidade Digital</h2>
+                <p>Acreditamos que a internet deve ser acessível para todos, independentemente de suas habilidades ou limitações. Nosso projeto visa:</p>
+                <ul>
+                    <li>Facilitar o acesso à internet para iniciantes.</li>
+                    <li>Promover a inclusão digital.</li>
+                    <li>Oferecer tutoriais e suporte.</li>
+                </ul>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB--sjbOFzscMguCHe6YdI85XYdlMTK4xyTw&s" alt="Ilustração sobre o projeto" class="section-image">
+                <p>Você pode contribuir de várias maneiras:</p>
+                <ul>
+                    <li><strong>Doações:</strong> Sua doação ajuda a manter nossos projetos e expandir nosso alcance.</li>
+                    <li><strong>Voluntariado:</strong> Participe de iniciativas para ensinar pessoas a usar a internet.</li>
+                    <li><strong>Divulgação:</strong> Compartilhe nosso projeto com amigos e familiares.</li>
+                </ul>
+                <div class="donate-button" onclick="openDonationModal()">Doar Agora</div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <h3>Acessibilidade Digital para Todos</h3>
+        <p>&copy; 2023 Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Chatbot para Quero Aprender -->
+    <div id="chatbot-learn" class="chatbot">
+        <header>
+            Chatbot de Ajuda
+            <button class="close-btn" onclick="toggleChatbot('learn')">×</button>
+        </header>
+        <div class="messages" id="chatbotMessagesLearn">
+            <div class="message bot">Olá! Eu sou um chatbot para ajudar iniciantes na internet. Você pode me perguntar coisas como:<br>
+                - Como usar o Google?<br>
+                - Como pesquisar na internet?<br>
+                - O que é um navegador?<br>
+                Digite sua pergunta abaixo!
+            </div>
+        </div>
+        <input type="text" id="chatbotInputLearn" placeholder="Digite sua mensagem..." onkeypress="handleChatbotInput(event, 'learn')">
+    </div>
+
+    <!-- Chatbot para Quero Ajudar -->
+    <div id="chatbot-help" class="chatbot">
+        <header>
+            Chatbot de Ajuda
+            <button class="close-btn" onclick="toggleChatbot('help')">×</button>
+        </header>
+        <div class="messages" id="chatbotMessagesHelp">
+            <div class="message bot">Olá! Eu sou um chatbot para ajudar você a contribuir com nosso projeto. Você pode me perguntar coisas como:<br>
+                - Como posso doar?<br>
+                - Como ser voluntário?<br>
+                - Como divulgar o projeto?<br>
+                Digite sua pergunta abaixo!
+            </div>
+        </div>
+        <input type="text" id="chatbotInputHelp" placeholder="Digite sua mensagem..." onkeypress="handleChatbotInput(event, 'help')">
+    </div>
+
+    <!-- Botão para abrir o chatbot de Quero Aprender -->
+    <button id="chatbot-toggle-learn" class="chatbot-toggle" onclick="toggleChatbot('learn')">Falar com o Chatbot</button>
+
+    <!-- Botão para abrir o chatbot de Quero Ajudar -->
+    <button id="chatbot-toggle-help" class="chatbot-toggle" onclick="toggleChatbot('help')">Falar com o Chatbot</button>
+
+    <!-- Modal de Doação -->
+    <div id="donationModal" class="modal">
+        <div class="modal-content">
+            <h2>Faça uma Doação</h2>
+            <form id="donationForm">
+                <label for="donationAmount">Valor da Doação:</label>
+                <input type="number" id="donationAmount" placeholder="R$ 0,00" required>
+                <label for="donationName">Seu Nome:</label>
+                <input type="text" id="donationName" placeholder="Nome" required>
+                <label for="donationEmail">Seu Email:</label>
+                <input type="email" id="donationEmail" placeholder="Email" required>
+                <button type="submit">Doar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Criação de Conta -->
+    <div id="accountModal" class="modal">
+        <div class="modal-content">
+            <h2>Criar Conta</h2>
+            <form id="accountForm">
+                <label for="accountName">Seu Nome:</label>
+                <input type="text" id="accountName" placeholder="Nome" required>
+                <label for="accountEmail">Seu Email:</label>
+                <input type="email" id="accountEmail" placeholder="Email" required>
+                <label for="accountPassword">Senha:</label>
+                <input type="password" id="accountPassword" placeholder="Senha" required>
+                <button type="submit">Criar Conta</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Alternar entre abas
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+
+            // Mostrar o botão do chatbot correspondente à aba ativa
+            if (tabId === 'learn') {
+                document.getElementById('chatbot-toggle-learn').style.display = 'block';
+                document.getElementById('chatbot-toggle-help').style.display = 'none';
+            } else if (tabId === 'help') {
+                document.getElementById('chatbot-toggle-learn').style.display = 'none';
+                document.getElementById('chatbot-toggle-help').style.display = 'block';
+            }
+        }
+
+        // Alternar visibilidade do chatbot
+        function toggleChatbot(type) {
+            const chatbot = document.getElementById(`chatbot-${type}`);
+            const toggleButton = document.getElementById(`chatbot-toggle-${type}`);
+            chatbot.classList.toggle('open');
+            toggleButton.style.display = chatbot.classList.contains('open') ? 'none' : 'block';
+        }
+
+        // Banco de perguntas e respostas para "Quero Aprender"
+        const qaPairsLearn = [
+            {
+                question: "como usar o google",
+                answer: "Passo a passo para usar o Google:<br>1) Abra o navegador.<br>2) Digite www.google.com na barra de endereços.<br>3) Digite o que você quer pesquisar e pressione Enter."
+            },
+            {
+                question: "como pesquisar na internet",
+                answer: "Passo a passo para pesquisar:<br>1) Abra o Google.<br>2) Digite palavras-chave sobre o que você quer saber.<br>3) Clique em um resultado para ler mais."
+            },
+            {
+                question: "o que é um navegador",
+                answer: "Um navegador é um programa que permite acessar sites. Exemplos: Google Chrome, Mozilla Firefox, Microsoft Edge."
+            },
+            {
+                question: "como conectar ao wi-fi",
+                answer: "Passo a passo para conectar ao Wi-Fi:<br>1) Acesse as configurações do seu dispositivo.<br>2) Selecione a rede Wi-Fi disponível.<br>3) Digite a senha e conecte-se."
+            },
+            {
+                question: "como criar um email",
+                answer: "Passo a passo para criar um email:<br>1) Acesse um site como Gmail (www.gmail.com).<br>2) Clique em 'Criar conta'.<br>3) Siga as instruções para preencher seus dados."
+            },
+            // Adicione mais perguntas e respostas aqui
+        ];
+
+        // Banco de perguntas e respostas para "Quero Ajudar"
+        const qaPairsHelp = [
+            {
+                question: "como doar",
+                answer: "Você pode doar clicando no botão 'Doar Agora' na aba 'Quero Ajudar'. Aceitamos doações via cartão de crédito, boleto e PIX."
+            },
+            {
+                question: "como ser voluntário",
+                answer: "Para ser voluntário, entre em contato conosco pelo email voluntario@acessibilidadedigital.com. Teremos prazer em te ajudar!"
+            },
+            {
+                question: "como divulgar",
+                answer: "Você pode divulgar nosso projeto compartilhando nosso site com amigos, familiares e nas redes sociais. Cada compartilhamento ajuda!"
+            },
+            {
+                question: "o que é acessibilidade digital",
+                answer: "Acessibilidade digital é garantir que todos possam usar a internet, independentemente de suas limitações. Nosso projeto visa facilitar isso para iniciantes."
+            },
+            // Adicione mais perguntas e respostas aqui
+        ];
+
+        // Função para responder às mensagens do usuário
+        function respondToMessage(message, type) {
+            const lowerMessage = message.toLowerCase();
+            let response = "Desculpe, não entendi. Aqui estão algumas perguntas que posso responder:<br>1) Como usar o Google?<br>2) Como pesquisar na internet?<br>3) O que é um navegador?";
+            if (type === 'learn') {
+                for (const pair of qaPairsLearn) {
+                    if (lowerMessage.includes(pair.question.toLowerCase())) {
+                        response = pair.answer;
+                        break;
+                    }
+                }
+            } else if (type === 'help') {
+                for (const pair of qaPairsHelp) {
+                    if (lowerMessage.includes(pair.question.toLowerCase())) {
+                        response = pair.answer;
+                        break;
+                    }
+                }
+            }
+            return response;
+        }
+
+        // Função para adicionar mensagens ao chat
+        function addMessage(text, sender, type) {
+            const messages = document.getElementById(`chatbotMessages${type.charAt(0).toUpperCase() + type.slice(1)}`);
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.innerHTML = text;
+            messages.appendChild(messageElement);
+            messages.scrollTop = messages.scrollHeight; // Rolagem automática para a última mensagem
+        }
+
+        // Função para processar a entrada do usuário
+        function handleChatbotInput(event, type) {
+            if (event.key === 'Enter') {
+                const input = document.getElementById(`chatbotInput${type.charAt(0).toUpperCase() + type.slice(1)}`);
+                const message = input.value.trim();
+                if (message) {
+                    addMessage(message, 'user', type);
+                    input.value = '';
+
+                    // Responde à mensagem
+                    const botResponse = respondToMessage(message, type);
+                    addMessage(botResponse, 'bot', type);
+                }
+            }
+        }
+
+        // Modal de Doação
+        function openDonationModal() {
+            const modal = document.getElementById('donationModal');
+            modal.classList.add('open');
+        }
+
+        function closeDonationModal() {
+            const modal = document.getElementById('donationModal');
+            modal.classList.remove('open');
+        }
+
+        // Modal de Criação de Conta
+        function showAccountModal() {
+            const modal = document.getElementById('accountModal');
+            modal.classList.add('open');
+        }
+
+        function closeAccountModal() {
+            const modal = document.getElementById('accountModal');
+            modal.classList.remove('open');
+        }
+
+        // Fechar modal ao clicar fora dele
+        window.addEventListener('click', (event) => {
+            const donationModal = document.getElementById('donationModal');
+            const accountModal = document.getElementById('accountModal');
+            if (event.target === donationModal) {
+                closeDonationModal();
+            }
+            if (event.target === accountModal) {
+                closeAccountModal();
+            }
+        });
+
+        // Enviar formulário de doação
+        document.getElementById('donationForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const amount = document.getElementById('donationAmount').value;
+            const name = document.getElementById('donationName').value;
+            const email = document.getElementById('donationEmail').value;
+
+            alert(`Obrigado, ${name}, por sua doação de R$ ${amount}! Um email de confirmação foi enviado para ${email}.`);
+            closeDonationModal();
+        });
+
+        // Enviar formulário de criação de conta
+        document.getElementById('accountForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const name = document.getElementById('accountName').value;
+            const email = document.getElementById('accountEmail').value;
+            const password = document.getElementById('accountPassword').value;
+
+            alert(`Conta criada com sucesso para ${name}! Um email de confirmação foi enviado para ${email}.`);
+            closeAccountModal();
+        });
+    </script>
+</body>
+</html>
